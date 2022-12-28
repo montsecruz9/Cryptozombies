@@ -22,7 +22,7 @@ contract ZombieFactory {
     mapping (uint => address) public zombieToOwner;
     mapping (address => uint) ownerZombieCount;
 
-    function createZombie (string memory _name, uint _dna) private {
+    function createZombie (string memory _name, uint _dna) internal {
         // adding zombies to array and declaring zombie's ids 
         uint id = zombies.push(Zombie(_name, _dna)) - 1;
         // assigning ownership to whoever called the function
