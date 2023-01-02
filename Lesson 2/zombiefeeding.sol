@@ -27,11 +27,17 @@ contract ZombieFeeding is ZombieFactory {
     KittyInterface kittyContract = KittyInterface(ckAddress);
    
     // Creating function to feed and multiply zombies
-    function feedAndMultiply(uint _zombieId, uint _targetDna) public {
+    function feedAndMultiply(uint _zombieId, uint _targetDna, string memory _species) public {
     // making sure we own this zombie 
     require(msg.sender == zombieToOwner[_zombieId]);
     // getting this zombie's dna
     Zombie storage myZombie = zombies[_zombieId];  
+    _targetDna = _targetDna % dnaModulus;
+    uint newDna = (myZombie.dna + _targetDna) / 2;
+    // if statement to check if the zombie comes from a kitty and edit their dna
+    if (keccak256(abi.encodePacked(_species)) == keccak256(abi.encodePacked("kitty"))) {
+      newDna = newDna - newDna % 100 + 99;
+    }
 
     //Creating function that will interact with the CryptoKitties contract
     function feedOnKitty(uint _zombieId, uint _kittyId) public {
@@ -40,7 +46,7 @@ contract ZombieFeeding is ZombieFactory {
     // Call the contract and store genes in kittyDna
     (,,,,,,,,,kittyDna) = kittyContract.getKitty(_kittyId);
     // call feedAndMultiply
-    feedAndMultiply(_zombieId, kittyDna); 
+    feedAndMultiply(_zombieId, kittyDna, "kitty"); 
   }
 
 }
