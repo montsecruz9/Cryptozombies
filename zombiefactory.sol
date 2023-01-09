@@ -1,8 +1,10 @@
 // version pragma
 pragma solidity >=0.5.0 <0.6.0; 
 
+import "./ownable.sol";
+
 // Create contract
-contract ZombieFactory {
+contract ZombieFactory is Ownable {
     uint dnaDigits = 16;
     uint dnaModulus = 10 ** dnaDigits;
 
