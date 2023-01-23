@@ -18,6 +18,8 @@ contract ZombieFactory is Ownable {
         uint dna;
         uint32 level;
         uint32 readyTime;
+        uint16 winCount;
+        uint16 lossCount;
     }
 
     // Create an army (array) of zombies
@@ -29,7 +31,7 @@ contract ZombieFactory is Ownable {
 
     function createZombie (string memory _name, uint _dna) internal {
         // adding zombies to array and declaring zombie's ids 
-        uint id = zombies.push(Zombie(_name, _dna, 1, uint32(now + cooldownTime))) - 1;
+        uint id = zombies.push(Zombie(_name, _dna, 1, uint32(now + cooldownTime), 0, 0)) - 1;
         // assigning ownership to whoever called the function
         zombieToOwner[id] = msg.sender;
         // increase count for this msg.sender 
