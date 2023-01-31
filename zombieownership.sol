@@ -2,8 +2,11 @@ pragma solidity >=0.5.0 <0.6.0;
 
 import "./zombieattack.sol";
 import "./erc721.sol";
+import "./safemath.sol"
 
 contract ZombieOwnership is ZombieAttack, ERC721 {
+
+    using SafeMath for uint256;
 
     // map to make sure only the owner or the approved address of a token/zombie can transfer it
     mapping (uint => address) zombieApprovals;
@@ -20,9 +23,9 @@ contract ZombieOwnership is ZombieAttack, ERC721 {
 
     function _transfer(address _from, address _to, uint256 _tokenId) private {
         // increment ownerZombieCount for the person receiving the zombie
-        ownerZombieCount[_to]++;
+        ownerZombieCount[_to] = ownerZombieCount[_to].add(1);
         // decrease ownerZombieCount for the person sending the zombie 
-        ownerZombieCount[_from]--;
+        ownerZombieCount[_from] = ownerZombieCount[_from].sub(1);
         // change zombieToOwner mapping from _tokenId to _to
         zombieToOwner[_tokenId] = _to;
         // fire Transfer event
