@@ -12,6 +12,8 @@ contract ZombieFactory is Ownable {
 
     // telling our contract to use SafeMath
     using SafeMath for uint256;
+    using SafeMath16 for uint16;
+    using SafeMath32 for uint32;
 
     // Creating event for app front-end
     event NewZombie(uint zombieId, string name, uint dna);
@@ -39,7 +41,7 @@ contract ZombieFactory is Ownable {
         // assigning ownership to whoever called the function
         zombieToOwner[id] = msg.sender;
         // increase count for this msg.sender 
-        ownerZombieCount[msg.sender]++;
+        ownerZombieCount[msg.sender] = ownerZombieCount[msg.sender].add(1);
         // declaring event
         emit NewZombie(id, _name, _dna);
     }
