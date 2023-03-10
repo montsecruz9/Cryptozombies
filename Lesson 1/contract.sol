@@ -1,5 +1,7 @@
-// version pragma
-pragma solidity >=0.5.0 <0.6.0; 
+pragma solidity ^0.6.6;
+
+
+import "@chainlink/contracts/src/v0.6/VRFConsumerBase.sol"; 
 
 // Create contract
 contract ZombieFactory {
